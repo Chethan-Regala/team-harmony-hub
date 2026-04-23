@@ -18,6 +18,14 @@ import { Route as AuthAdminRouteImport } from './routes/_auth.admin'
 import { Route as AuthManagerIndexRouteImport } from './routes/_auth.manager.index'
 import { Route as AuthEmployeeIndexRouteImport } from './routes/_auth.employee.index'
 import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
+import { Route as AuthEmployeeUpdatesRouteImport } from './routes/_auth.employee.updates'
+import { Route as AuthEmployeeProfileRouteImport } from './routes/_auth.employee.profile'
+import { Route as AuthEmployeePayslipsRouteImport } from './routes/_auth.employee.payslips'
+import { Route as AuthEmployeeLeavesRouteImport } from './routes/_auth.employee.leaves'
+import { Route as AuthEmployeeFeedbackRouteImport } from './routes/_auth.employee.feedback'
+import { Route as AuthEmployeeDocumentsRouteImport } from './routes/_auth.employee.documents'
+import { Route as AuthEmployeeAttendanceRouteImport } from './routes/_auth.employee.attendance'
+import { Route as AuthEmployeeAnnouncementsRouteImport } from './routes/_auth.employee.announcements'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -63,6 +71,47 @@ const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AuthAdminRoute,
 } as any)
+const AuthEmployeeUpdatesRoute = AuthEmployeeUpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeProfileRoute = AuthEmployeeProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeePayslipsRoute = AuthEmployeePayslipsRouteImport.update({
+  id: '/payslips',
+  path: '/payslips',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeLeavesRoute = AuthEmployeeLeavesRouteImport.update({
+  id: '/leaves',
+  path: '/leaves',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeFeedbackRoute = AuthEmployeeFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeDocumentsRoute = AuthEmployeeDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeAttendanceRoute = AuthEmployeeAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeAnnouncementsRoute =
+  AuthEmployeeAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthEmployeeRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -70,6 +119,14 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AuthAdminRouteWithChildren
   '/employee': typeof AuthEmployeeRouteWithChildren
   '/manager': typeof AuthManagerRouteWithChildren
+  '/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/employee/profile': typeof AuthEmployeeProfileRoute
+  '/employee/updates': typeof AuthEmployeeUpdatesRoute
   '/admin/': typeof AuthAdminIndexRoute
   '/employee/': typeof AuthEmployeeIndexRoute
   '/manager/': typeof AuthManagerIndexRoute
@@ -77,6 +134,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
+  '/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/employee/profile': typeof AuthEmployeeProfileRoute
+  '/employee/updates': typeof AuthEmployeeUpdatesRoute
   '/admin': typeof AuthAdminIndexRoute
   '/employee': typeof AuthEmployeeIndexRoute
   '/manager': typeof AuthManagerIndexRoute
@@ -89,6 +154,14 @@ export interface FileRoutesById {
   '/_auth/admin': typeof AuthAdminRouteWithChildren
   '/_auth/employee': typeof AuthEmployeeRouteWithChildren
   '/_auth/manager': typeof AuthManagerRouteWithChildren
+  '/_auth/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/_auth/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/_auth/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/_auth/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/_auth/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/_auth/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/_auth/employee/profile': typeof AuthEmployeeProfileRoute
+  '/_auth/employee/updates': typeof AuthEmployeeUpdatesRoute
   '/_auth/admin/': typeof AuthAdminIndexRoute
   '/_auth/employee/': typeof AuthEmployeeIndexRoute
   '/_auth/manager/': typeof AuthManagerIndexRoute
@@ -101,11 +174,32 @@ export interface FileRouteTypes {
     | '/admin'
     | '/employee'
     | '/manager'
+    | '/employee/announcements'
+    | '/employee/attendance'
+    | '/employee/documents'
+    | '/employee/feedback'
+    | '/employee/leaves'
+    | '/employee/payslips'
+    | '/employee/profile'
+    | '/employee/updates'
     | '/admin/'
     | '/employee/'
     | '/manager/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/admin' | '/employee' | '/manager'
+  to:
+    | '/'
+    | '/login'
+    | '/employee/announcements'
+    | '/employee/attendance'
+    | '/employee/documents'
+    | '/employee/feedback'
+    | '/employee/leaves'
+    | '/employee/payslips'
+    | '/employee/profile'
+    | '/employee/updates'
+    | '/admin'
+    | '/employee'
+    | '/manager'
   id:
     | '__root__'
     | '/'
@@ -114,6 +208,14 @@ export interface FileRouteTypes {
     | '/_auth/admin'
     | '/_auth/employee'
     | '/_auth/manager'
+    | '/_auth/employee/announcements'
+    | '/_auth/employee/attendance'
+    | '/_auth/employee/documents'
+    | '/_auth/employee/feedback'
+    | '/_auth/employee/leaves'
+    | '/_auth/employee/payslips'
+    | '/_auth/employee/profile'
+    | '/_auth/employee/updates'
     | '/_auth/admin/'
     | '/_auth/employee/'
     | '/_auth/manager/'
@@ -190,6 +292,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAdminIndexRouteImport
       parentRoute: typeof AuthAdminRoute
     }
+    '/_auth/employee/updates': {
+      id: '/_auth/employee/updates'
+      path: '/updates'
+      fullPath: '/employee/updates'
+      preLoaderRoute: typeof AuthEmployeeUpdatesRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/profile': {
+      id: '/_auth/employee/profile'
+      path: '/profile'
+      fullPath: '/employee/profile'
+      preLoaderRoute: typeof AuthEmployeeProfileRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/payslips': {
+      id: '/_auth/employee/payslips'
+      path: '/payslips'
+      fullPath: '/employee/payslips'
+      preLoaderRoute: typeof AuthEmployeePayslipsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/leaves': {
+      id: '/_auth/employee/leaves'
+      path: '/leaves'
+      fullPath: '/employee/leaves'
+      preLoaderRoute: typeof AuthEmployeeLeavesRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/feedback': {
+      id: '/_auth/employee/feedback'
+      path: '/feedback'
+      fullPath: '/employee/feedback'
+      preLoaderRoute: typeof AuthEmployeeFeedbackRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/documents': {
+      id: '/_auth/employee/documents'
+      path: '/documents'
+      fullPath: '/employee/documents'
+      preLoaderRoute: typeof AuthEmployeeDocumentsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/attendance': {
+      id: '/_auth/employee/attendance'
+      path: '/attendance'
+      fullPath: '/employee/attendance'
+      preLoaderRoute: typeof AuthEmployeeAttendanceRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/announcements': {
+      id: '/_auth/employee/announcements'
+      path: '/announcements'
+      fullPath: '/employee/announcements'
+      preLoaderRoute: typeof AuthEmployeeAnnouncementsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
   }
 }
 
@@ -206,10 +364,26 @@ const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(
 )
 
 interface AuthEmployeeRouteChildren {
+  AuthEmployeeAnnouncementsRoute: typeof AuthEmployeeAnnouncementsRoute
+  AuthEmployeeAttendanceRoute: typeof AuthEmployeeAttendanceRoute
+  AuthEmployeeDocumentsRoute: typeof AuthEmployeeDocumentsRoute
+  AuthEmployeeFeedbackRoute: typeof AuthEmployeeFeedbackRoute
+  AuthEmployeeLeavesRoute: typeof AuthEmployeeLeavesRoute
+  AuthEmployeePayslipsRoute: typeof AuthEmployeePayslipsRoute
+  AuthEmployeeProfileRoute: typeof AuthEmployeeProfileRoute
+  AuthEmployeeUpdatesRoute: typeof AuthEmployeeUpdatesRoute
   AuthEmployeeIndexRoute: typeof AuthEmployeeIndexRoute
 }
 
 const AuthEmployeeRouteChildren: AuthEmployeeRouteChildren = {
+  AuthEmployeeAnnouncementsRoute: AuthEmployeeAnnouncementsRoute,
+  AuthEmployeeAttendanceRoute: AuthEmployeeAttendanceRoute,
+  AuthEmployeeDocumentsRoute: AuthEmployeeDocumentsRoute,
+  AuthEmployeeFeedbackRoute: AuthEmployeeFeedbackRoute,
+  AuthEmployeeLeavesRoute: AuthEmployeeLeavesRoute,
+  AuthEmployeePayslipsRoute: AuthEmployeePayslipsRoute,
+  AuthEmployeeProfileRoute: AuthEmployeeProfileRoute,
+  AuthEmployeeUpdatesRoute: AuthEmployeeUpdatesRoute,
   AuthEmployeeIndexRoute: AuthEmployeeIndexRoute,
 }
 
