@@ -15,6 +15,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthManagerRouteImport } from './routes/_auth.manager'
 import { Route as AuthEmployeeRouteImport } from './routes/_auth.employee'
 import { Route as AuthAdminRouteImport } from './routes/_auth.admin'
+import { Route as AuthManagerIndexRouteImport } from './routes/_auth.manager.index'
+import { Route as AuthEmployeeIndexRouteImport } from './routes/_auth.employee.index'
+import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
@@ -45,33 +48,62 @@ const AuthAdminRoute = AuthAdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthManagerIndexRoute = AuthManagerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthEmployeeIndexRoute = AuthEmployeeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/admin': typeof AuthAdminRoute
-  '/employee': typeof AuthEmployeeRoute
-  '/manager': typeof AuthManagerRoute
+  '/admin': typeof AuthAdminRouteWithChildren
+  '/employee': typeof AuthEmployeeRouteWithChildren
+  '/manager': typeof AuthManagerRouteWithChildren
+  '/admin/': typeof AuthAdminIndexRoute
+  '/employee/': typeof AuthEmployeeIndexRoute
+  '/manager/': typeof AuthManagerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/admin': typeof AuthAdminRoute
-  '/employee': typeof AuthEmployeeRoute
-  '/manager': typeof AuthManagerRoute
+  '/admin': typeof AuthAdminIndexRoute
+  '/employee': typeof AuthEmployeeIndexRoute
+  '/manager': typeof AuthManagerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
   '/login': typeof LoginRoute
-  '/_auth/admin': typeof AuthAdminRoute
-  '/_auth/employee': typeof AuthEmployeeRoute
-  '/_auth/manager': typeof AuthManagerRoute
+  '/_auth/admin': typeof AuthAdminRouteWithChildren
+  '/_auth/employee': typeof AuthEmployeeRouteWithChildren
+  '/_auth/manager': typeof AuthManagerRouteWithChildren
+  '/_auth/admin/': typeof AuthAdminIndexRoute
+  '/_auth/employee/': typeof AuthEmployeeIndexRoute
+  '/_auth/manager/': typeof AuthManagerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/admin' | '/employee' | '/manager'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/admin'
+    | '/employee'
+    | '/manager'
+    | '/admin/'
+    | '/employee/'
+    | '/manager/'
   fileRoutesByTo: FileRoutesByTo
   to: '/' | '/login' | '/admin' | '/employee' | '/manager'
   id:
@@ -82,6 +114,9 @@ export interface FileRouteTypes {
     | '/_auth/admin'
     | '/_auth/employee'
     | '/_auth/manager'
+    | '/_auth/admin/'
+    | '/_auth/employee/'
+    | '/_auth/manager/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -134,19 +169,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAdminRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/manager/': {
+      id: '/_auth/manager/'
+      path: '/'
+      fullPath: '/manager/'
+      preLoaderRoute: typeof AuthManagerIndexRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/employee/': {
+      id: '/_auth/employee/'
+      path: '/'
+      fullPath: '/employee/'
+      preLoaderRoute: typeof AuthEmployeeIndexRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/admin/': {
+      id: '/_auth/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthAdminIndexRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
   }
 }
 
+interface AuthAdminRouteChildren {
+  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
+}
+
+const AuthAdminRouteChildren: AuthAdminRouteChildren = {
+  AuthAdminIndexRoute: AuthAdminIndexRoute,
+}
+
+const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(
+  AuthAdminRouteChildren,
+)
+
+interface AuthEmployeeRouteChildren {
+  AuthEmployeeIndexRoute: typeof AuthEmployeeIndexRoute
+}
+
+const AuthEmployeeRouteChildren: AuthEmployeeRouteChildren = {
+  AuthEmployeeIndexRoute: AuthEmployeeIndexRoute,
+}
+
+const AuthEmployeeRouteWithChildren = AuthEmployeeRoute._addFileChildren(
+  AuthEmployeeRouteChildren,
+)
+
+interface AuthManagerRouteChildren {
+  AuthManagerIndexRoute: typeof AuthManagerIndexRoute
+}
+
+const AuthManagerRouteChildren: AuthManagerRouteChildren = {
+  AuthManagerIndexRoute: AuthManagerIndexRoute,
+}
+
+const AuthManagerRouteWithChildren = AuthManagerRoute._addFileChildren(
+  AuthManagerRouteChildren,
+)
+
 interface AuthRouteChildren {
-  AuthAdminRoute: typeof AuthAdminRoute
-  AuthEmployeeRoute: typeof AuthEmployeeRoute
-  AuthManagerRoute: typeof AuthManagerRoute
+  AuthAdminRoute: typeof AuthAdminRouteWithChildren
+  AuthEmployeeRoute: typeof AuthEmployeeRouteWithChildren
+  AuthManagerRoute: typeof AuthManagerRouteWithChildren
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
-  AuthAdminRoute: AuthAdminRoute,
-  AuthEmployeeRoute: AuthEmployeeRoute,
-  AuthManagerRoute: AuthManagerRoute,
+  AuthAdminRoute: AuthAdminRouteWithChildren,
+  AuthEmployeeRoute: AuthEmployeeRouteWithChildren,
+  AuthManagerRoute: AuthManagerRouteWithChildren,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
