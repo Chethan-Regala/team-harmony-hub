@@ -9,38 +9,405 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SetupRouteImport } from './routes/setup'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthManagerRouteImport } from './routes/_auth.manager'
+import { Route as AuthEmployeeRouteImport } from './routes/_auth.employee'
+import { Route as AuthAdminRouteImport } from './routes/_auth.admin'
+import { Route as AuthManagerIndexRouteImport } from './routes/_auth.manager.index'
+import { Route as AuthEmployeeIndexRouteImport } from './routes/_auth.employee.index'
+import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
+import { Route as AuthManagerUpdatesRouteImport } from './routes/_auth.manager.updates'
+import { Route as AuthManagerTeamRouteImport } from './routes/_auth.manager.team'
+import { Route as AuthManagerResponsibilitiesRouteImport } from './routes/_auth.manager.responsibilities'
+import { Route as AuthManagerLeavesRouteImport } from './routes/_auth.manager.leaves'
+import { Route as AuthManagerFeedbackRouteImport } from './routes/_auth.manager.feedback'
+import { Route as AuthManagerAttendanceRouteImport } from './routes/_auth.manager.attendance'
+import { Route as AuthEmployeeUpdatesRouteImport } from './routes/_auth.employee.updates'
+import { Route as AuthEmployeeProfileRouteImport } from './routes/_auth.employee.profile'
+import { Route as AuthEmployeePayslipsRouteImport } from './routes/_auth.employee.payslips'
+import { Route as AuthEmployeeLeavesRouteImport } from './routes/_auth.employee.leaves'
+import { Route as AuthEmployeeFeedbackRouteImport } from './routes/_auth.employee.feedback'
+import { Route as AuthEmployeeDocumentsRouteImport } from './routes/_auth.employee.documents'
+import { Route as AuthEmployeeAttendanceRouteImport } from './routes/_auth.employee.attendance'
+import { Route as AuthEmployeeAnnouncementsRouteImport } from './routes/_auth.employee.announcements'
+import { Route as AuthAdminUsersRouteImport } from './routes/_auth.admin.users'
+import { Route as AuthAdminLocationsRouteImport } from './routes/_auth.admin.locations'
+import { Route as AuthAdminLeavesRouteImport } from './routes/_auth.admin.leaves'
+import { Route as AuthAdminDocumentsRouteImport } from './routes/_auth.admin.documents'
+import { Route as AuthAdminAttendanceRouteImport } from './routes/_auth.admin.attendance'
+import { Route as AuthAdminAnnouncementsRouteImport } from './routes/_auth.admin.announcements'
 
+const SetupRoute = SetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthManagerRoute = AuthManagerRouteImport.update({
+  id: '/manager',
+  path: '/manager',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthEmployeeRoute = AuthEmployeeRouteImport.update({
+  id: '/employee',
+  path: '/employee',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthAdminRoute = AuthAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthManagerIndexRoute = AuthManagerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthEmployeeIndexRoute = AuthEmployeeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthManagerUpdatesRoute = AuthManagerUpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerTeamRoute = AuthManagerTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerResponsibilitiesRoute =
+  AuthManagerResponsibilitiesRouteImport.update({
+    id: '/responsibilities',
+    path: '/responsibilities',
+    getParentRoute: () => AuthManagerRoute,
+  } as any)
+const AuthManagerLeavesRoute = AuthManagerLeavesRouteImport.update({
+  id: '/leaves',
+  path: '/leaves',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerFeedbackRoute = AuthManagerFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerAttendanceRoute = AuthManagerAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthEmployeeUpdatesRoute = AuthEmployeeUpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeProfileRoute = AuthEmployeeProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeePayslipsRoute = AuthEmployeePayslipsRouteImport.update({
+  id: '/payslips',
+  path: '/payslips',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeLeavesRoute = AuthEmployeeLeavesRouteImport.update({
+  id: '/leaves',
+  path: '/leaves',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeFeedbackRoute = AuthEmployeeFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeDocumentsRoute = AuthEmployeeDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeAttendanceRoute = AuthEmployeeAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AuthEmployeeRoute,
+} as any)
+const AuthEmployeeAnnouncementsRoute =
+  AuthEmployeeAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthEmployeeRoute,
+  } as any)
+const AuthAdminUsersRoute = AuthAdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthAdminLocationsRoute = AuthAdminLocationsRouteImport.update({
+  id: '/locations',
+  path: '/locations',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthAdminLeavesRoute = AuthAdminLeavesRouteImport.update({
+  id: '/leaves',
+  path: '/leaves',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthAdminDocumentsRoute = AuthAdminDocumentsRouteImport.update({
+  id: '/documents',
+  path: '/documents',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthAdminAttendanceRoute = AuthAdminAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthAdminAnnouncementsRoute = AuthAdminAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => AuthAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/setup': typeof SetupRoute
+  '/admin': typeof AuthAdminRouteWithChildren
+  '/employee': typeof AuthEmployeeRouteWithChildren
+  '/manager': typeof AuthManagerRouteWithChildren
+  '/admin/announcements': typeof AuthAdminAnnouncementsRoute
+  '/admin/attendance': typeof AuthAdminAttendanceRoute
+  '/admin/documents': typeof AuthAdminDocumentsRoute
+  '/admin/leaves': typeof AuthAdminLeavesRoute
+  '/admin/locations': typeof AuthAdminLocationsRoute
+  '/admin/users': typeof AuthAdminUsersRoute
+  '/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/employee/profile': typeof AuthEmployeeProfileRoute
+  '/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/manager/leaves': typeof AuthManagerLeavesRoute
+  '/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/manager/team': typeof AuthManagerTeamRoute
+  '/manager/updates': typeof AuthManagerUpdatesRoute
+  '/admin/': typeof AuthAdminIndexRoute
+  '/employee/': typeof AuthEmployeeIndexRoute
+  '/manager/': typeof AuthManagerIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/setup': typeof SetupRoute
+  '/admin/announcements': typeof AuthAdminAnnouncementsRoute
+  '/admin/attendance': typeof AuthAdminAttendanceRoute
+  '/admin/documents': typeof AuthAdminDocumentsRoute
+  '/admin/leaves': typeof AuthAdminLeavesRoute
+  '/admin/locations': typeof AuthAdminLocationsRoute
+  '/admin/users': typeof AuthAdminUsersRoute
+  '/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/employee/profile': typeof AuthEmployeeProfileRoute
+  '/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/manager/leaves': typeof AuthManagerLeavesRoute
+  '/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/manager/team': typeof AuthManagerTeamRoute
+  '/manager/updates': typeof AuthManagerUpdatesRoute
+  '/admin': typeof AuthAdminIndexRoute
+  '/employee': typeof AuthEmployeeIndexRoute
+  '/manager': typeof AuthManagerIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_auth': typeof AuthRouteWithChildren
+  '/login': typeof LoginRoute
+  '/setup': typeof SetupRoute
+  '/_auth/admin': typeof AuthAdminRouteWithChildren
+  '/_auth/employee': typeof AuthEmployeeRouteWithChildren
+  '/_auth/manager': typeof AuthManagerRouteWithChildren
+  '/_auth/admin/announcements': typeof AuthAdminAnnouncementsRoute
+  '/_auth/admin/attendance': typeof AuthAdminAttendanceRoute
+  '/_auth/admin/documents': typeof AuthAdminDocumentsRoute
+  '/_auth/admin/leaves': typeof AuthAdminLeavesRoute
+  '/_auth/admin/locations': typeof AuthAdminLocationsRoute
+  '/_auth/admin/users': typeof AuthAdminUsersRoute
+  '/_auth/employee/announcements': typeof AuthEmployeeAnnouncementsRoute
+  '/_auth/employee/attendance': typeof AuthEmployeeAttendanceRoute
+  '/_auth/employee/documents': typeof AuthEmployeeDocumentsRoute
+  '/_auth/employee/feedback': typeof AuthEmployeeFeedbackRoute
+  '/_auth/employee/leaves': typeof AuthEmployeeLeavesRoute
+  '/_auth/employee/payslips': typeof AuthEmployeePayslipsRoute
+  '/_auth/employee/profile': typeof AuthEmployeeProfileRoute
+  '/_auth/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/_auth/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/_auth/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/_auth/manager/leaves': typeof AuthManagerLeavesRoute
+  '/_auth/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/_auth/manager/team': typeof AuthManagerTeamRoute
+  '/_auth/manager/updates': typeof AuthManagerUpdatesRoute
+  '/_auth/admin/': typeof AuthAdminIndexRoute
+  '/_auth/employee/': typeof AuthEmployeeIndexRoute
+  '/_auth/manager/': typeof AuthManagerIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/setup'
+    | '/admin'
+    | '/employee'
+    | '/manager'
+    | '/admin/announcements'
+    | '/admin/attendance'
+    | '/admin/documents'
+    | '/admin/leaves'
+    | '/admin/locations'
+    | '/admin/users'
+    | '/employee/announcements'
+    | '/employee/attendance'
+    | '/employee/documents'
+    | '/employee/feedback'
+    | '/employee/leaves'
+    | '/employee/payslips'
+    | '/employee/profile'
+    | '/employee/updates'
+    | '/manager/attendance'
+    | '/manager/feedback'
+    | '/manager/leaves'
+    | '/manager/responsibilities'
+    | '/manager/team'
+    | '/manager/updates'
+    | '/admin/'
+    | '/employee/'
+    | '/manager/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/setup'
+    | '/admin/announcements'
+    | '/admin/attendance'
+    | '/admin/documents'
+    | '/admin/leaves'
+    | '/admin/locations'
+    | '/admin/users'
+    | '/employee/announcements'
+    | '/employee/attendance'
+    | '/employee/documents'
+    | '/employee/feedback'
+    | '/employee/leaves'
+    | '/employee/payslips'
+    | '/employee/profile'
+    | '/employee/updates'
+    | '/manager/attendance'
+    | '/manager/feedback'
+    | '/manager/leaves'
+    | '/manager/responsibilities'
+    | '/manager/team'
+    | '/manager/updates'
+    | '/admin'
+    | '/employee'
+    | '/manager'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/login'
+    | '/setup'
+    | '/_auth/admin'
+    | '/_auth/employee'
+    | '/_auth/manager'
+    | '/_auth/admin/announcements'
+    | '/_auth/admin/attendance'
+    | '/_auth/admin/documents'
+    | '/_auth/admin/leaves'
+    | '/_auth/admin/locations'
+    | '/_auth/admin/users'
+    | '/_auth/employee/announcements'
+    | '/_auth/employee/attendance'
+    | '/_auth/employee/documents'
+    | '/_auth/employee/feedback'
+    | '/_auth/employee/leaves'
+    | '/_auth/employee/payslips'
+    | '/_auth/employee/profile'
+    | '/_auth/employee/updates'
+    | '/_auth/manager/attendance'
+    | '/_auth/manager/feedback'
+    | '/_auth/manager/leaves'
+    | '/_auth/manager/responsibilities'
+    | '/_auth/manager/team'
+    | '/_auth/manager/updates'
+    | '/_auth/admin/'
+    | '/_auth/employee/'
+    | '/_auth/manager/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  SetupRoute: typeof SetupRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/setup': {
+      id: '/setup'
+      path: '/setup'
+      fullPath: '/setup'
+      preLoaderRoute: typeof SetupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +415,287 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/manager': {
+      id: '/_auth/manager'
+      path: '/manager'
+      fullPath: '/manager'
+      preLoaderRoute: typeof AuthManagerRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/employee': {
+      id: '/_auth/employee'
+      path: '/employee'
+      fullPath: '/employee'
+      preLoaderRoute: typeof AuthEmployeeRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/admin': {
+      id: '/_auth/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthAdminRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/manager/': {
+      id: '/_auth/manager/'
+      path: '/'
+      fullPath: '/manager/'
+      preLoaderRoute: typeof AuthManagerIndexRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/employee/': {
+      id: '/_auth/employee/'
+      path: '/'
+      fullPath: '/employee/'
+      preLoaderRoute: typeof AuthEmployeeIndexRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/admin/': {
+      id: '/_auth/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthAdminIndexRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/manager/updates': {
+      id: '/_auth/manager/updates'
+      path: '/updates'
+      fullPath: '/manager/updates'
+      preLoaderRoute: typeof AuthManagerUpdatesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/team': {
+      id: '/_auth/manager/team'
+      path: '/team'
+      fullPath: '/manager/team'
+      preLoaderRoute: typeof AuthManagerTeamRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/responsibilities': {
+      id: '/_auth/manager/responsibilities'
+      path: '/responsibilities'
+      fullPath: '/manager/responsibilities'
+      preLoaderRoute: typeof AuthManagerResponsibilitiesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/leaves': {
+      id: '/_auth/manager/leaves'
+      path: '/leaves'
+      fullPath: '/manager/leaves'
+      preLoaderRoute: typeof AuthManagerLeavesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/feedback': {
+      id: '/_auth/manager/feedback'
+      path: '/feedback'
+      fullPath: '/manager/feedback'
+      preLoaderRoute: typeof AuthManagerFeedbackRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/attendance': {
+      id: '/_auth/manager/attendance'
+      path: '/attendance'
+      fullPath: '/manager/attendance'
+      preLoaderRoute: typeof AuthManagerAttendanceRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/employee/updates': {
+      id: '/_auth/employee/updates'
+      path: '/updates'
+      fullPath: '/employee/updates'
+      preLoaderRoute: typeof AuthEmployeeUpdatesRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/profile': {
+      id: '/_auth/employee/profile'
+      path: '/profile'
+      fullPath: '/employee/profile'
+      preLoaderRoute: typeof AuthEmployeeProfileRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/payslips': {
+      id: '/_auth/employee/payslips'
+      path: '/payslips'
+      fullPath: '/employee/payslips'
+      preLoaderRoute: typeof AuthEmployeePayslipsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/leaves': {
+      id: '/_auth/employee/leaves'
+      path: '/leaves'
+      fullPath: '/employee/leaves'
+      preLoaderRoute: typeof AuthEmployeeLeavesRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/feedback': {
+      id: '/_auth/employee/feedback'
+      path: '/feedback'
+      fullPath: '/employee/feedback'
+      preLoaderRoute: typeof AuthEmployeeFeedbackRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/documents': {
+      id: '/_auth/employee/documents'
+      path: '/documents'
+      fullPath: '/employee/documents'
+      preLoaderRoute: typeof AuthEmployeeDocumentsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/attendance': {
+      id: '/_auth/employee/attendance'
+      path: '/attendance'
+      fullPath: '/employee/attendance'
+      preLoaderRoute: typeof AuthEmployeeAttendanceRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/employee/announcements': {
+      id: '/_auth/employee/announcements'
+      path: '/announcements'
+      fullPath: '/employee/announcements'
+      preLoaderRoute: typeof AuthEmployeeAnnouncementsRouteImport
+      parentRoute: typeof AuthEmployeeRoute
+    }
+    '/_auth/admin/users': {
+      id: '/_auth/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AuthAdminUsersRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/admin/locations': {
+      id: '/_auth/admin/locations'
+      path: '/locations'
+      fullPath: '/admin/locations'
+      preLoaderRoute: typeof AuthAdminLocationsRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/admin/leaves': {
+      id: '/_auth/admin/leaves'
+      path: '/leaves'
+      fullPath: '/admin/leaves'
+      preLoaderRoute: typeof AuthAdminLeavesRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/admin/documents': {
+      id: '/_auth/admin/documents'
+      path: '/documents'
+      fullPath: '/admin/documents'
+      preLoaderRoute: typeof AuthAdminDocumentsRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/admin/attendance': {
+      id: '/_auth/admin/attendance'
+      path: '/attendance'
+      fullPath: '/admin/attendance'
+      preLoaderRoute: typeof AuthAdminAttendanceRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/admin/announcements': {
+      id: '/_auth/admin/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AuthAdminAnnouncementsRouteImport
+      parentRoute: typeof AuthAdminRoute
+    }
   }
 }
 
+interface AuthAdminRouteChildren {
+  AuthAdminAnnouncementsRoute: typeof AuthAdminAnnouncementsRoute
+  AuthAdminAttendanceRoute: typeof AuthAdminAttendanceRoute
+  AuthAdminDocumentsRoute: typeof AuthAdminDocumentsRoute
+  AuthAdminLeavesRoute: typeof AuthAdminLeavesRoute
+  AuthAdminLocationsRoute: typeof AuthAdminLocationsRoute
+  AuthAdminUsersRoute: typeof AuthAdminUsersRoute
+  AuthAdminIndexRoute: typeof AuthAdminIndexRoute
+}
+
+const AuthAdminRouteChildren: AuthAdminRouteChildren = {
+  AuthAdminAnnouncementsRoute: AuthAdminAnnouncementsRoute,
+  AuthAdminAttendanceRoute: AuthAdminAttendanceRoute,
+  AuthAdminDocumentsRoute: AuthAdminDocumentsRoute,
+  AuthAdminLeavesRoute: AuthAdminLeavesRoute,
+  AuthAdminLocationsRoute: AuthAdminLocationsRoute,
+  AuthAdminUsersRoute: AuthAdminUsersRoute,
+  AuthAdminIndexRoute: AuthAdminIndexRoute,
+}
+
+const AuthAdminRouteWithChildren = AuthAdminRoute._addFileChildren(
+  AuthAdminRouteChildren,
+)
+
+interface AuthEmployeeRouteChildren {
+  AuthEmployeeAnnouncementsRoute: typeof AuthEmployeeAnnouncementsRoute
+  AuthEmployeeAttendanceRoute: typeof AuthEmployeeAttendanceRoute
+  AuthEmployeeDocumentsRoute: typeof AuthEmployeeDocumentsRoute
+  AuthEmployeeFeedbackRoute: typeof AuthEmployeeFeedbackRoute
+  AuthEmployeeLeavesRoute: typeof AuthEmployeeLeavesRoute
+  AuthEmployeePayslipsRoute: typeof AuthEmployeePayslipsRoute
+  AuthEmployeeProfileRoute: typeof AuthEmployeeProfileRoute
+  AuthEmployeeUpdatesRoute: typeof AuthEmployeeUpdatesRoute
+  AuthEmployeeIndexRoute: typeof AuthEmployeeIndexRoute
+}
+
+const AuthEmployeeRouteChildren: AuthEmployeeRouteChildren = {
+  AuthEmployeeAnnouncementsRoute: AuthEmployeeAnnouncementsRoute,
+  AuthEmployeeAttendanceRoute: AuthEmployeeAttendanceRoute,
+  AuthEmployeeDocumentsRoute: AuthEmployeeDocumentsRoute,
+  AuthEmployeeFeedbackRoute: AuthEmployeeFeedbackRoute,
+  AuthEmployeeLeavesRoute: AuthEmployeeLeavesRoute,
+  AuthEmployeePayslipsRoute: AuthEmployeePayslipsRoute,
+  AuthEmployeeProfileRoute: AuthEmployeeProfileRoute,
+  AuthEmployeeUpdatesRoute: AuthEmployeeUpdatesRoute,
+  AuthEmployeeIndexRoute: AuthEmployeeIndexRoute,
+}
+
+const AuthEmployeeRouteWithChildren = AuthEmployeeRoute._addFileChildren(
+  AuthEmployeeRouteChildren,
+)
+
+interface AuthManagerRouteChildren {
+  AuthManagerAttendanceRoute: typeof AuthManagerAttendanceRoute
+  AuthManagerFeedbackRoute: typeof AuthManagerFeedbackRoute
+  AuthManagerLeavesRoute: typeof AuthManagerLeavesRoute
+  AuthManagerResponsibilitiesRoute: typeof AuthManagerResponsibilitiesRoute
+  AuthManagerTeamRoute: typeof AuthManagerTeamRoute
+  AuthManagerUpdatesRoute: typeof AuthManagerUpdatesRoute
+  AuthManagerIndexRoute: typeof AuthManagerIndexRoute
+}
+
+const AuthManagerRouteChildren: AuthManagerRouteChildren = {
+  AuthManagerAttendanceRoute: AuthManagerAttendanceRoute,
+  AuthManagerFeedbackRoute: AuthManagerFeedbackRoute,
+  AuthManagerLeavesRoute: AuthManagerLeavesRoute,
+  AuthManagerResponsibilitiesRoute: AuthManagerResponsibilitiesRoute,
+  AuthManagerTeamRoute: AuthManagerTeamRoute,
+  AuthManagerUpdatesRoute: AuthManagerUpdatesRoute,
+  AuthManagerIndexRoute: AuthManagerIndexRoute,
+}
+
+const AuthManagerRouteWithChildren = AuthManagerRoute._addFileChildren(
+  AuthManagerRouteChildren,
+)
+
+interface AuthRouteChildren {
+  AuthAdminRoute: typeof AuthAdminRouteWithChildren
+  AuthEmployeeRoute: typeof AuthEmployeeRouteWithChildren
+  AuthManagerRoute: typeof AuthManagerRouteWithChildren
+}
+
+const AuthRouteChildren: AuthRouteChildren = {
+  AuthAdminRoute: AuthAdminRouteWithChildren,
+  AuthEmployeeRoute: AuthEmployeeRouteWithChildren,
+  AuthManagerRoute: AuthManagerRouteWithChildren,
+}
+
+const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRouteWithChildren,
+  LoginRoute: LoginRoute,
+  SetupRoute: SetupRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
