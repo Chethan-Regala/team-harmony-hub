@@ -18,6 +18,12 @@ import { Route as AuthAdminRouteImport } from './routes/_auth.admin'
 import { Route as AuthManagerIndexRouteImport } from './routes/_auth.manager.index'
 import { Route as AuthEmployeeIndexRouteImport } from './routes/_auth.employee.index'
 import { Route as AuthAdminIndexRouteImport } from './routes/_auth.admin.index'
+import { Route as AuthManagerUpdatesRouteImport } from './routes/_auth.manager.updates'
+import { Route as AuthManagerTeamRouteImport } from './routes/_auth.manager.team'
+import { Route as AuthManagerResponsibilitiesRouteImport } from './routes/_auth.manager.responsibilities'
+import { Route as AuthManagerLeavesRouteImport } from './routes/_auth.manager.leaves'
+import { Route as AuthManagerFeedbackRouteImport } from './routes/_auth.manager.feedback'
+import { Route as AuthManagerAttendanceRouteImport } from './routes/_auth.manager.attendance'
 import { Route as AuthEmployeeUpdatesRouteImport } from './routes/_auth.employee.updates'
 import { Route as AuthEmployeeProfileRouteImport } from './routes/_auth.employee.profile'
 import { Route as AuthEmployeePayslipsRouteImport } from './routes/_auth.employee.payslips'
@@ -70,6 +76,37 @@ const AuthAdminIndexRoute = AuthAdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthAdminRoute,
+} as any)
+const AuthManagerUpdatesRoute = AuthManagerUpdatesRouteImport.update({
+  id: '/updates',
+  path: '/updates',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerTeamRoute = AuthManagerTeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerResponsibilitiesRoute =
+  AuthManagerResponsibilitiesRouteImport.update({
+    id: '/responsibilities',
+    path: '/responsibilities',
+    getParentRoute: () => AuthManagerRoute,
+  } as any)
+const AuthManagerLeavesRoute = AuthManagerLeavesRouteImport.update({
+  id: '/leaves',
+  path: '/leaves',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerFeedbackRoute = AuthManagerFeedbackRouteImport.update({
+  id: '/feedback',
+  path: '/feedback',
+  getParentRoute: () => AuthManagerRoute,
+} as any)
+const AuthManagerAttendanceRoute = AuthManagerAttendanceRouteImport.update({
+  id: '/attendance',
+  path: '/attendance',
+  getParentRoute: () => AuthManagerRoute,
 } as any)
 const AuthEmployeeUpdatesRoute = AuthEmployeeUpdatesRouteImport.update({
   id: '/updates',
@@ -127,6 +164,12 @@ export interface FileRoutesByFullPath {
   '/employee/payslips': typeof AuthEmployeePayslipsRoute
   '/employee/profile': typeof AuthEmployeeProfileRoute
   '/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/manager/leaves': typeof AuthManagerLeavesRoute
+  '/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/manager/team': typeof AuthManagerTeamRoute
+  '/manager/updates': typeof AuthManagerUpdatesRoute
   '/admin/': typeof AuthAdminIndexRoute
   '/employee/': typeof AuthEmployeeIndexRoute
   '/manager/': typeof AuthManagerIndexRoute
@@ -142,6 +185,12 @@ export interface FileRoutesByTo {
   '/employee/payslips': typeof AuthEmployeePayslipsRoute
   '/employee/profile': typeof AuthEmployeeProfileRoute
   '/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/manager/leaves': typeof AuthManagerLeavesRoute
+  '/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/manager/team': typeof AuthManagerTeamRoute
+  '/manager/updates': typeof AuthManagerUpdatesRoute
   '/admin': typeof AuthAdminIndexRoute
   '/employee': typeof AuthEmployeeIndexRoute
   '/manager': typeof AuthManagerIndexRoute
@@ -162,6 +211,12 @@ export interface FileRoutesById {
   '/_auth/employee/payslips': typeof AuthEmployeePayslipsRoute
   '/_auth/employee/profile': typeof AuthEmployeeProfileRoute
   '/_auth/employee/updates': typeof AuthEmployeeUpdatesRoute
+  '/_auth/manager/attendance': typeof AuthManagerAttendanceRoute
+  '/_auth/manager/feedback': typeof AuthManagerFeedbackRoute
+  '/_auth/manager/leaves': typeof AuthManagerLeavesRoute
+  '/_auth/manager/responsibilities': typeof AuthManagerResponsibilitiesRoute
+  '/_auth/manager/team': typeof AuthManagerTeamRoute
+  '/_auth/manager/updates': typeof AuthManagerUpdatesRoute
   '/_auth/admin/': typeof AuthAdminIndexRoute
   '/_auth/employee/': typeof AuthEmployeeIndexRoute
   '/_auth/manager/': typeof AuthManagerIndexRoute
@@ -182,6 +237,12 @@ export interface FileRouteTypes {
     | '/employee/payslips'
     | '/employee/profile'
     | '/employee/updates'
+    | '/manager/attendance'
+    | '/manager/feedback'
+    | '/manager/leaves'
+    | '/manager/responsibilities'
+    | '/manager/team'
+    | '/manager/updates'
     | '/admin/'
     | '/employee/'
     | '/manager/'
@@ -197,6 +258,12 @@ export interface FileRouteTypes {
     | '/employee/payslips'
     | '/employee/profile'
     | '/employee/updates'
+    | '/manager/attendance'
+    | '/manager/feedback'
+    | '/manager/leaves'
+    | '/manager/responsibilities'
+    | '/manager/team'
+    | '/manager/updates'
     | '/admin'
     | '/employee'
     | '/manager'
@@ -216,6 +283,12 @@ export interface FileRouteTypes {
     | '/_auth/employee/payslips'
     | '/_auth/employee/profile'
     | '/_auth/employee/updates'
+    | '/_auth/manager/attendance'
+    | '/_auth/manager/feedback'
+    | '/_auth/manager/leaves'
+    | '/_auth/manager/responsibilities'
+    | '/_auth/manager/team'
+    | '/_auth/manager/updates'
     | '/_auth/admin/'
     | '/_auth/employee/'
     | '/_auth/manager/'
@@ -291,6 +364,48 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AuthAdminIndexRouteImport
       parentRoute: typeof AuthAdminRoute
+    }
+    '/_auth/manager/updates': {
+      id: '/_auth/manager/updates'
+      path: '/updates'
+      fullPath: '/manager/updates'
+      preLoaderRoute: typeof AuthManagerUpdatesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/team': {
+      id: '/_auth/manager/team'
+      path: '/team'
+      fullPath: '/manager/team'
+      preLoaderRoute: typeof AuthManagerTeamRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/responsibilities': {
+      id: '/_auth/manager/responsibilities'
+      path: '/responsibilities'
+      fullPath: '/manager/responsibilities'
+      preLoaderRoute: typeof AuthManagerResponsibilitiesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/leaves': {
+      id: '/_auth/manager/leaves'
+      path: '/leaves'
+      fullPath: '/manager/leaves'
+      preLoaderRoute: typeof AuthManagerLeavesRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/feedback': {
+      id: '/_auth/manager/feedback'
+      path: '/feedback'
+      fullPath: '/manager/feedback'
+      preLoaderRoute: typeof AuthManagerFeedbackRouteImport
+      parentRoute: typeof AuthManagerRoute
+    }
+    '/_auth/manager/attendance': {
+      id: '/_auth/manager/attendance'
+      path: '/attendance'
+      fullPath: '/manager/attendance'
+      preLoaderRoute: typeof AuthManagerAttendanceRouteImport
+      parentRoute: typeof AuthManagerRoute
     }
     '/_auth/employee/updates': {
       id: '/_auth/employee/updates'
@@ -392,10 +507,22 @@ const AuthEmployeeRouteWithChildren = AuthEmployeeRoute._addFileChildren(
 )
 
 interface AuthManagerRouteChildren {
+  AuthManagerAttendanceRoute: typeof AuthManagerAttendanceRoute
+  AuthManagerFeedbackRoute: typeof AuthManagerFeedbackRoute
+  AuthManagerLeavesRoute: typeof AuthManagerLeavesRoute
+  AuthManagerResponsibilitiesRoute: typeof AuthManagerResponsibilitiesRoute
+  AuthManagerTeamRoute: typeof AuthManagerTeamRoute
+  AuthManagerUpdatesRoute: typeof AuthManagerUpdatesRoute
   AuthManagerIndexRoute: typeof AuthManagerIndexRoute
 }
 
 const AuthManagerRouteChildren: AuthManagerRouteChildren = {
+  AuthManagerAttendanceRoute: AuthManagerAttendanceRoute,
+  AuthManagerFeedbackRoute: AuthManagerFeedbackRoute,
+  AuthManagerLeavesRoute: AuthManagerLeavesRoute,
+  AuthManagerResponsibilitiesRoute: AuthManagerResponsibilitiesRoute,
+  AuthManagerTeamRoute: AuthManagerTeamRoute,
+  AuthManagerUpdatesRoute: AuthManagerUpdatesRoute,
   AuthManagerIndexRoute: AuthManagerIndexRoute,
 }
 
