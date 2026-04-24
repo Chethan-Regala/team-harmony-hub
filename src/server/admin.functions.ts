@@ -17,10 +17,12 @@ const CreateUserSchema = z.object({
 });
 
 async function assertAdmin(userId: string) {
-  const SUPABASE_URL = process.env.SUPABASE_URL!;
-  const SUPABASE_PUBLISHABLE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY!;
-  const sb = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-  const { data } = await sb.from("user_roles").select("role").eq("user_id", userId).eq("role", "admin").maybeSingle();
+  const { data } = await supabaseAdmin
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .eq("role", "admin")
+    .maybeSingle();
   if (!data) throw new Error("Forbidden: admin role required");
 }
 
