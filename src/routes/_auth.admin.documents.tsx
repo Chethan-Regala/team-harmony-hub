@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Download, Loader2 } from "lucide-react";
+import { Trash2, Eye, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { DocViewer } from "@/components/DocViewer";
 
 export const Route = createFileRoute("/_auth/admin/documents")({
   component: AdminDocs,
