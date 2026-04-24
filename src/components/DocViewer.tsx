@@ -37,9 +37,9 @@ export function DocViewer({ open, onOpenChange, url, title, filename }: DocViewe
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-5xl w-[95vw] h-[85vh] flex flex-col p-0 gap-0">
-        <DialogHeader className="px-4 py-3 border-b flex-row items-center justify-between space-y-0">
-          <DialogTitle className="truncate pr-4">{title}</DialogTitle>
-          <div className="flex gap-2">
+        <DialogHeader className="pl-4 pr-12 py-3 border-b flex-row items-center justify-between gap-4 space-y-0">
+          <DialogTitle className="truncate flex-1 min-w-0">{title}</DialogTitle>
+          <div className="flex gap-2 shrink-0 mr-4">
             {url && (
               <>
                 <Button variant="outline" size="sm" asChild>
