@@ -38,8 +38,8 @@ function DocsPage() {
     }
     const { data, error } = await supabase.storage
       .from("documents")
-      .createSignedUrl(d.file_path, 60);
-    if (error || !data) {
+      .createSignedUrl(d.file_path, 3600);
+    if (error || !data?.signedUrl) {
       toast.error(error?.message ?? "Could not open file");
       return;
     }
