@@ -36,6 +36,7 @@ function AdminDocs() {
   const [tag, setTag] = useState("policy");
   const [visibility, setVisibility] = useState("all");
   const [uploading, setUploading] = useState(false);
+  const [viewer, setViewer] = useState<{ url: string | null; title: string; filename: string } | null>(null);
 
   const load = useCallback(async () => {
     const { data } = await supabase.from("documents").select("*").order("created_at", { ascending: false });
