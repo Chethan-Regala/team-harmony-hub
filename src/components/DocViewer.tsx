@@ -63,7 +63,18 @@ export function DocViewer({ open, onOpenChange, url, title, filename }: DocViewe
             <div className="h-full flex items-center justify-center p-4">
               <img src={url} alt={title} className="max-h-full max-w-full object-contain" />
             </div>
-          ) : isPdf || isOffice || isText ? (
+          ) : isPdf ? (
+            <object data={url} type="application/pdf" className="w-full h-full bg-background">
+              <div className="h-full flex flex-col items-center justify-center gap-3 text-sm text-muted-foreground p-6 text-center">
+                <p>Your browser blocked the inline PDF viewer.</p>
+                <Button asChild>
+                  <a href={url} target="_blank" rel="noopener noreferrer">
+                    <ExternalLink className="h-4 w-4 mr-2" /> Open in new tab
+                  </a>
+                </Button>
+              </div>
+            </object>
+          ) : isOffice || isText ? (
             <iframe
               src={viewerSrc}
               title={title}
