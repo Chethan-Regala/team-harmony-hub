@@ -9,9 +9,10 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Trash2, Download, Loader2 } from "lucide-react";
+import { Trash2, Eye, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
+import { DocViewer } from "@/components/DocViewer";
 
 export const Route = createFileRoute("/_auth/admin/documents")({
   component: AdminDocs,
@@ -35,6 +36,7 @@ function AdminDocs() {
   const [tag, setTag] = useState("policy");
   const [visibility, setVisibility] = useState("all");
   const [uploading, setUploading] = useState(false);
+  const [viewer, setViewer] = useState<{ url: string | null; title: string; filename: string } | null>(null);
 
   const load = useCallback(async () => {
     const { data } = await supabase.from("documents").select("*").order("created_at", { ascending: false });
@@ -81,20 +83,22 @@ function AdminDocs() {
     }
   };
 
-  const download = async (d: Doc) => {
-    // Backwards-compat: legacy entries stored full URLs
+  const view = async (d: Doc) => {
+    const filename = d.file_path.split("/").pop() ?? d.title;
     if (/^https?:\/\//i.test(d.file_path)) {
-      window.open(d.file_path, "_blank", "noopener,noreferrer");
+      setViewer({ url: d.file_path, title: d.title, filename });
       return;
     }
+    setViewer({ url: null, title: d.title, filename });
     const { data, error } = await supabase.storage
       .from("documents")
       .createSignedUrl(d.file_path, 3600);
     if (error || !data?.signedUrl) {
       toast.error(error?.message ?? "Could not generate link");
+      setViewer(null);
       return;
     }
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    setViewer({ url: data.signedUrl, title: d.title, filename });
   };
 
   const remove = async (d: Doc) => {
@@ -186,7 +190,7 @@ function AdminDocs() {
                   <TableCell>
                     <button
                       type="button"
-                      onClick={() => download(d)}
+                      onClick={() => view(d)}
                       className="text-left hover:underline"
                     >
                       {d.title}
@@ -197,8 +201,8 @@ function AdminDocs() {
                   </TableCell>
                   <TableCell>{format(new Date(d.created_at), "PP")}</TableCell>
                   <TableCell className="flex gap-1 justify-end">
-                    <Button variant="ghost" size="icon" onClick={() => download(d)}>
-                      <Download className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" onClick={() => view(d)}>
+                      <Eye className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => remove(d)}>
                       <Trash2 className="h-4 w-4" />
@@ -210,6 +214,13 @@ function AdminDocs() {
           </Table>
         </CardContent>
       </Card>
+      <DocViewer
+        open={viewer !== null}
+        onOpenChange={(o) => !o && setViewer(null)}
+        url={viewer?.url ?? null}
+        title={viewer?.title ?? ""}
+        filename={viewer?.filename ?? ""}
+      />
     </div>
   );
 }
