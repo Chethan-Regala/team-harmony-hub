@@ -83,20 +83,22 @@ function AdminDocs() {
     }
   };
 
-  const download = async (d: Doc) => {
-    // Backwards-compat: legacy entries stored full URLs
+  const view = async (d: Doc) => {
+    const filename = d.file_path.split("/").pop() ?? d.title;
     if (/^https?:\/\//i.test(d.file_path)) {
-      window.open(d.file_path, "_blank", "noopener,noreferrer");
+      setViewer({ url: d.file_path, title: d.title, filename });
       return;
     }
+    setViewer({ url: null, title: d.title, filename });
     const { data, error } = await supabase.storage
       .from("documents")
       .createSignedUrl(d.file_path, 3600);
     if (error || !data?.signedUrl) {
       toast.error(error?.message ?? "Could not generate link");
+      setViewer(null);
       return;
     }
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    setViewer({ url: data.signedUrl, title: d.title, filename });
   };
 
   const remove = async (d: Doc) => {
