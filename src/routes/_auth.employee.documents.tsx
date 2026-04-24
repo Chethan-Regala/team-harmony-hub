@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { FileText } from "lucide-react";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_auth/employee/documents")({
   component: DocsPage,
@@ -30,6 +31,21 @@ function DocsPage() {
       .then(({ data }) => setDocs((data as Doc[]) ?? []));
   }, []);
 
+  const open = async (d: Doc) => {
+    if (/^https?:\/\//i.test(d.file_path)) {
+      window.open(d.file_path, "_blank", "noopener,noreferrer");
+      return;
+    }
+    const { data, error } = await supabase.storage
+      .from("documents")
+      .createSignedUrl(d.file_path, 60);
+    if (error || !data) {
+      toast.error(error?.message ?? "Could not open file");
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -49,14 +65,13 @@ function DocsPage() {
                 <li key={d.id} className="flex items-center justify-between border-b pb-2 last:border-0">
                   <div className="flex items-center gap-2">
                     <FileText className="h-4 w-4 text-muted-foreground" />
-                    <a
-                      href={d.file_path}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-sm font-medium hover:underline"
+                    <button
+                      type="button"
+                      onClick={() => open(d)}
+                      className="text-sm font-medium hover:underline text-left"
                     >
                       {d.title}
-                    </a>
+                    </button>
                     {d.tag && <Badge variant="secondary">{d.tag}</Badge>}
                   </div>
                   <span className="text-xs text-muted-foreground">

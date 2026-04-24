@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Trash2 } from "lucide-react";
+import { Trash2, Download, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { format } from "date-fns";
 
@@ -31,9 +31,10 @@ function AdminDocs() {
   const { user } = useAuth();
   const [docs, setDocs] = useState<Doc[]>([]);
   const [title, setTitle] = useState("");
-  const [url, setUrl] = useState("");
+  const [file, setFile] = useState<File | null>(null);
   const [tag, setTag] = useState("policy");
   const [visibility, setVisibility] = useState("all");
+  const [uploading, setUploading] = useState(false);
 
   const load = useCallback(async () => {
     const { data } = await supabase.from("documents").select("*").order("created_at", { ascending: false });
@@ -46,41 +47,78 @@ function AdminDocs() {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
-    const { error } = await supabase.from("documents").insert({
-      uploader_id: user.id,
-      title,
-      file_path: url,
-      visibility,
-      tag,
-    });
-    if (error) toast.error(error.message);
-    else {
-      toast.success("Document added");
+    if (!user || !file) return;
+    setUploading(true);
+    try {
+      const ext = file.name.split(".").pop() ?? "bin";
+      const path = `${user.id}/${Date.now()}-${crypto.randomUUID()}.${ext}`;
+      const { error: upErr } = await supabase.storage
+        .from("documents")
+        .upload(path, file, { contentType: file.type, upsert: false });
+      if (upErr) throw upErr;
+
+      const { error } = await supabase.from("documents").insert({
+        uploader_id: user.id,
+        title,
+        file_path: path,
+        visibility,
+        tag,
+      });
+      if (error) {
+        await supabase.storage.from("documents").remove([path]);
+        throw error;
+      }
+      toast.success("Document uploaded");
       setTitle("");
-      setUrl("");
+      setFile(null);
+      (document.getElementById("doc-file") as HTMLInputElement | null)?.value &&
+        ((document.getElementById("doc-file") as HTMLInputElement).value = "");
       await load();
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
     }
   };
 
-  const remove = async (id: string) => {
-    const { error } = await supabase.from("documents").delete().eq("id", id);
-    if (error) toast.error(error.message);
-    else {
-      toast.success("Deleted");
-      await load();
+  const download = async (d: Doc) => {
+    // Backwards-compat: legacy entries stored full URLs
+    if (/^https?:\/\//i.test(d.file_path)) {
+      window.open(d.file_path, "_blank", "noopener,noreferrer");
+      return;
     }
+    const { data, error } = await supabase.storage
+      .from("documents")
+      .createSignedUrl(d.file_path, 60);
+    if (error || !data) {
+      toast.error(error?.message ?? "Could not generate link");
+      return;
+    }
+    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+  };
+
+  const remove = async (d: Doc) => {
+    const { error } = await supabase.from("documents").delete().eq("id", d.id);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    if (!/^https?:\/\//i.test(d.file_path)) {
+      await supabase.storage.from("documents").remove([d.file_path]);
+    }
+    toast.success("Deleted");
+    await load();
   };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Documents</h1>
-        <p className="text-muted-foreground">Add policies and shared files (link-based)</p>
+        <p className="text-muted-foreground">Upload policies and shared files</p>
       </div>
       <Card>
         <CardHeader>
-          <CardTitle>Add Document</CardTitle>
+          <CardTitle>Upload Document</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={submit} className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -89,13 +127,12 @@ function AdminDocs() {
               <Input value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={200} />
             </div>
             <div className="space-y-2">
-              <Label>File URL</Label>
+              <Label>File</Label>
               <Input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
+                id="doc-file"
+                type="file"
+                onChange={(e) => setFile(e.target.files?.[0] ?? null)}
                 required
-                placeholder="https://..."
               />
             </div>
             <div className="space-y-2">
@@ -124,7 +161,10 @@ function AdminDocs() {
               </Select>
             </div>
             <div className="md:col-span-2">
-              <Button type="submit">Add</Button>
+              <Button type="submit" disabled={uploading || !file}>
+                {uploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {uploading ? "Uploading…" : "Upload"}
+              </Button>
             </div>
           </form>
         </CardContent>
@@ -144,16 +184,23 @@ function AdminDocs() {
               {docs.map((d) => (
                 <TableRow key={d.id}>
                   <TableCell>
-                    <a href={d.file_path} target="_blank" rel="noreferrer" className="hover:underline">
+                    <button
+                      type="button"
+                      onClick={() => download(d)}
+                      className="text-left hover:underline"
+                    >
                       {d.title}
-                    </a>
+                    </button>
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{d.tag ?? "—"}</Badge>
                   </TableCell>
                   <TableCell>{format(new Date(d.created_at), "PP")}</TableCell>
-                  <TableCell>
-                    <Button variant="ghost" size="icon" onClick={() => remove(d.id)}>
+                  <TableCell className="flex gap-1 justify-end">
+                    <Button variant="ghost" size="icon" onClick={() => download(d)}>
+                      <Download className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="icon" onClick={() => remove(d)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </TableCell>
