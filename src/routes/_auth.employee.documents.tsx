@@ -23,6 +23,7 @@ interface Doc {
 
 function DocsPage() {
   const [docs, setDocs] = useState<Doc[]>([]);
+  const [viewer, setViewer] = useState<{ url: string | null; title: string; filename: string } | null>(null);
 
   useEffect(() => {
     void supabase
@@ -33,18 +34,21 @@ function DocsPage() {
   }, []);
 
   const open = async (d: Doc) => {
+    const filename = d.file_path.split("/").pop() ?? d.title;
     if (/^https?:\/\//i.test(d.file_path)) {
-      window.open(d.file_path, "_blank", "noopener,noreferrer");
+      setViewer({ url: d.file_path, title: d.title, filename });
       return;
     }
+    setViewer({ url: null, title: d.title, filename });
     const { data, error } = await supabase.storage
       .from("documents")
       .createSignedUrl(d.file_path, 3600);
     if (error || !data?.signedUrl) {
       toast.error(error?.message ?? "Could not open file");
+      setViewer(null);
       return;
     }
-    window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    setViewer({ url: data.signedUrl, title: d.title, filename });
   };
 
   return (
@@ -84,6 +88,13 @@ function DocsPage() {
           )}
         </CardContent>
       </Card>
+      <DocViewer
+        open={viewer !== null}
+        onOpenChange={(o) => !o && setViewer(null)}
+        url={viewer?.url ?? null}
+        title={viewer?.title ?? ""}
+        filename={viewer?.filename ?? ""}
+      />
     </div>
   );
 }
