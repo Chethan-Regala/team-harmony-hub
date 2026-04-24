@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { FileText } from "lucide-react";
 import { toast } from "sonner";
+import { DocViewer } from "@/components/DocViewer";
 
 export const Route = createFileRoute("/_auth/employee/documents")({
   component: DocsPage,
