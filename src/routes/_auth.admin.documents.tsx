@@ -190,7 +190,7 @@ function AdminDocs() {
                   <TableCell>
                     <button
                       type="button"
-                      onClick={() => download(d)}
+                      onClick={() => view(d)}
                       className="text-left hover:underline"
                     >
                       {d.title}
@@ -201,8 +201,8 @@ function AdminDocs() {
                   </TableCell>
                   <TableCell>{format(new Date(d.created_at), "PP")}</TableCell>
                   <TableCell className="flex gap-1 justify-end">
-                    <Button variant="ghost" size="icon" onClick={() => download(d)}>
-                      <Download className="h-4 w-4" />
+                    <Button variant="ghost" size="icon" onClick={() => view(d)}>
+                      <Eye className="h-4 w-4" />
                     </Button>
                     <Button variant="ghost" size="icon" onClick={() => remove(d)}>
                       <Trash2 className="h-4 w-4" />
@@ -214,6 +214,13 @@ function AdminDocs() {
           </Table>
         </CardContent>
       </Card>
+      <DocViewer
+        open={viewer !== null}
+        onOpenChange={(o) => !o && setViewer(null)}
+        url={viewer?.url ?? null}
+        title={viewer?.title ?? ""}
+        filename={viewer?.filename ?? ""}
+      />
     </div>
   );
 }
