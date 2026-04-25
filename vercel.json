@@ -1,6 +1,4 @@
 {
   "installCommand": "npm ci",
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/client",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "buildCommand": "NITRO_PRESET=vercel npm run build"
 }
