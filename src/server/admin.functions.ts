@@ -37,10 +37,11 @@ export const createUser = createServerFn({ method: "POST" })
       user_metadata: { full_name: data.full_name },
     });
     if (error) throw new Error(error.message);
+    if (!created.user) throw new Error("Failed to create user");
     const newId = created.user.id;
 
     // wait briefly for trigger; then update profile fields
-    await supabaseAdmin
+    const { error: profileError } = await supabaseAdmin
       .from("profiles")
       .update({
         full_name: data.full_name,
@@ -50,8 +51,12 @@ export const createUser = createServerFn({ method: "POST" })
         department: data.department ?? null,
       })
       .eq("id", newId);
+    if (profileError) throw new Error(profileError.message);
 
-    await supabaseAdmin.from("user_roles").insert({ user_id: newId, role: data.role });
+    const { error: roleError } = await supabaseAdmin
+      .from("user_roles")
+      .insert({ user_id: newId, role: data.role });
+    if (roleError) throw new Error(roleError.message);
 
     return { id: newId };
   });
@@ -99,9 +104,17 @@ export const seedInitialAdmin = createServerFn({ method: "POST" })
       user_metadata: { full_name: data.full_name },
     });
     if (error) throw new Error(error.message);
+    if (!created.user) throw new Error("Failed to create admin user");
     const newId = created.user.id;
-    await supabaseAdmin.from("profiles").update({ full_name: data.full_name }).eq("id", newId);
-    await supabaseAdmin.from("user_roles").insert({ user_id: newId, role: "admin" });
+    const { error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .update({ full_name: data.full_name })
+      .eq("id", newId);
+    if (profileError) throw new Error(profileError.message);
+    const { error: roleError } = await supabaseAdmin
+      .from("user_roles")
+      .insert({ user_id: newId, role: "admin" });
+    if (roleError) throw new Error(roleError.message);
     return { ok: true };
   });
 
