@@ -34,7 +34,10 @@ export const Route = createRootRoute({
       { title: "HR Portal" },
       { name: "description", content: "Internal HR management portal" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }],
+    links: [
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "stylesheet", href: appCss },
+    ],
   }),
   shellComponent: RootShell,
   component: RootComponent,

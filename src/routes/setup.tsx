@@ -61,7 +61,8 @@ function SetupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 px-4">
       <Card className="w-full max-w-md">
-        <CardHeader>
+        <CardHeader className="items-center">
+          <img src="/logo.svg" alt="HR Portal Logo" className="h-12 w-auto mb-2" />
           <CardTitle className="text-2xl">First-Time Setup</CardTitle>
           <CardDescription>Create the initial Admin account for your HR Portal.</CardDescription>
         </CardHeader>

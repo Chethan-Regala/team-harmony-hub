@@ -73,7 +73,10 @@ export function AppShell({ section }: { section: "admin" | "manager" | "employee
     <div className="flex min-h-screen bg-muted/30">
       <aside className="w-64 border-r bg-card flex flex-col">
         <div className="p-6 border-b">
-          <h1 className="text-lg font-bold text-foreground">HR Portal</h1>
+          <div className="flex items-center gap-2">
+            <img src="/logo.svg" alt="HR Portal Logo" className="h-8 w-auto flex-shrink-0" />
+            <h1 className="text-lg font-bold text-foreground">HR Portal</h1>
+          </div>
           <p className="text-xs text-muted-foreground capitalize mt-1">{section} workspace</p>
         </div>
         <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
